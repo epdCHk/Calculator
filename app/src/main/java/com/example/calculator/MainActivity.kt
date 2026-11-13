@@ -3,12 +3,16 @@ package com.example.calculator
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.math.sin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +46,12 @@ fun Calculator() {
             op.value = ""
             num.value = "0"
             isNew.value = true
+        } else if (btn == "sin") {
+            if (num.value != "Ошибка") {
+                val x = num.value.toDouble()
+                num.value = sin(x).toString()
+                isNew.value = true
+            }
         } else if (btn == "+" || btn == "-" || btn == "*" || btn == "/") {
             if (!isNew.value) {
                 if (prev.value == "") {
@@ -65,7 +76,7 @@ fun Calculator() {
                 isNew.value = false
             }
         } else {
-            if (isNew.value || num.value == "0") {
+            if (isNew.value || num.value == "0" || num.value == "Ошибка") {
                 num.value = btn
                 isNew.value = false
             } else {
@@ -77,17 +88,20 @@ fun Calculator() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .systemBarsPadding()
             .padding(10.dp)
     ) {
         Column(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = prev.value,
                 fontSize = 18.sp,
-                color = Color.Gray
+                color = Color.Gray,
+                modifier = Modifier.horizontalScroll(rememberScrollState())
             )
             Text(
                 text = op.value,
@@ -95,7 +109,9 @@ fun Calculator() {
             )
             Text(
                 text = num.value,
-                fontSize = 36.sp
+                fontSize = 36.sp,
+                maxLines = 1,
+                modifier = Modifier.horizontalScroll(rememberScrollState())
             )
         }
 
@@ -165,6 +181,9 @@ fun Calculator() {
             }
 
             Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
+                Button(onClick = { press("sin") }, modifier = Modifier.weight(1f).fillMaxHeight().padding(2.dp)) {
+                    Text(text = "sin", fontSize = 20.sp)
+                }
                 Button(onClick = { press("=") }, modifier = Modifier.weight(1f).fillMaxHeight().padding(2.dp)) {
                     Text(text = "=", fontSize = 20.sp)
                 }
