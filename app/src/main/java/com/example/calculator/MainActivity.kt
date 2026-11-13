@@ -184,7 +184,7 @@ fun Calculator() {
                 Button(onClick = { press("sin") }, modifier = Modifier.weight(1f).fillMaxHeight().padding(2.dp)) {
                     Text(text = "sin", fontSize = 20.sp)
                 }
-                Button(onClick = { press("=") }, modifier = Modifier.weight(1f).fillMaxHeight().padding(2.dp)) {
+                Button(onClick = { press("=") }, modifier = Modifier.weight(3f).fillMaxHeight().padding(2.dp)) {
                     Text(text = "=", fontSize = 20.sp)
                 }
             }
