@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -95,7 +96,6 @@ fun Calculator() {
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
-                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = prev.value,
@@ -166,7 +166,7 @@ fun Calculator() {
             }
 
             Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
-                Button(onClick = { press("C") }, modifier = Modifier.weight(1f).fillMaxHeight().padding(2.dp)) {
+                Button(onClick = { press("C") }, colors = ButtonDefaults.buttonColors(containerColor = Color.Red), modifier = Modifier.weight(1f).fillMaxHeight().padding(2.dp)) {
                     Text(text = "C", fontSize = 20.sp)
                 }
                 Button(onClick = { press("0") }, modifier = Modifier.weight(1f).fillMaxHeight().padding(2.dp)) {
